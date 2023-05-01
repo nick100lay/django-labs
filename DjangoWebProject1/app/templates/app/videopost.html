@@ -1,0 +1,24 @@
+{% extends "app/layout.html" %}
+{% block content %}
+<h1>{{ title }} Видеоматериалы </h1>
+
+<hr />
+<div>
+    <h2>Тарифы в файловом хранилище Mega</h2>
+    <video src="/media/mega.mp4" controls="controls" width="400" height="300" poster="/media/mega.png"></video>
+</div>
+
+<hr />
+<div>
+    <h2>Тарифы в файловом хранилище Dropbox</h2>
+    <video src="/media/dropbox.mp4" controls="controls" width="400" height="300" poster="/media/dropbox.png"></video>
+</div>
+
+<hr />
+<div>
+    <h2>Илон Маск про инвестиции в файловые тарифы</h2>
+    <video src="/media/elon.mp4" controls="controls" width="400" height="300" poster="/media/elon.jpg"></video>
+</div>
+
+
+{% endblock %}

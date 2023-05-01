@@ -1,0 +1,100 @@
+{% extends "app/layout.html" %}
+{% block content %}
+{% if not thanks %}
+ <h2>Отправьте, пожалуйста, форму обратной связи</h2>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.who.id_for_label }}">{{ form.who.label }}</label>
+                {{ form.who }}
+                <small id="whoSmall" class="form-text text-muted"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.city.id_for_label }}">{{ form.city.label }}</label>
+                {{ form.city }}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.occupation.id_for_label }}">{{ form.occupation.label }}</label>
+                {{ form.occupation }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.gender.id_for_label }}">{{ form.gender.label }}:</label>
+                {{ form.gender }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.rating.id_for_label }}">{{ form.rating.label }}:</label>
+                {{ form.rating }}
+            </div>
+
+            <div class="form-check">
+                {{ form.notice }}
+                <label class="form-check-label" for="{{ form.notice.id_for_label }}">{{ form.notice.label }}</label>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                {{ form.email }}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.wish.id_for_label }}">{{ form.wish.label }}:</label>
+                {{ form.wish }}
+            </div>
+            
+            <input id="btn" type="submit" class="btn btn-primary mb-2" value="Отправить">
+
+            <script>
+
+                function who_change() {
+                    $('#whoSmall').html('Вы выбрали ' + this.value);
+                }
+                $('#id_who').change(who_change);
+
+                function button_rename()
+                {
+                    $('#btn').prop('value', 'ОТПРАВИТЬ');
+                }
+                $('#btn').mouseover(button_rename);
+
+                function button_oldname()
+                {
+                    $('#btn').prop('value', 'Отправить')
+                }
+                $('#btn').mouseout(button_oldname);
+
+                function name_focus()
+                {
+                    $('#id_city').css('background-color', '#ffaa00')
+                }
+                $('#id_city').focus(name_focus);
+                function name_blur()
+                {
+                    $('#id_city').css('background-color', 'white')
+                }
+                $('#id_city').blur(name_blur)
+            </script>
+        </form>
+    </div>
+{% else %}
+ <h2>Благодарим Вас за предоставленную информацию!</h2>
+ <h3>Вы сообщили следующее:</h3>
+ <ul>
+    <li><span>Кто вы:</span> {{ form.cleaned_data.who }}</li>
+    <li><span>Город:</span> {{ form.cleaned_data.city }}</li>
+    <li><span>Род занятий:</span> {{ form.cleaned_data.occupation }}</li>
+    <li><span>Пол:</span> {{ form.cleaned_data.gender }}</li>
+    <li><span>Оценка сайта:</span> {{ form.cleaned_data.rating }}</li>
+    <li><span>Хотите ли получать новости сайта на e-mail:</span>
+        {{ form.cleaned_data.notice|yesno:"Да,Нет,Неизвестно" }}
+    </li>
+    <li><span>Ваш e-mail:</span> {{ form.cleaned_data.email }}</li>
+    <li><span>Ваши пожелания:</span> {{ form.cleaned_data.wish }}</li>
+ </ul>
+{% endif %}
+{% endblock %}

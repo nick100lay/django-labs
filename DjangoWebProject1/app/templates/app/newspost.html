@@ -1,0 +1,54 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+
+<h2> {{post_1.title}} </h2>
+
+{% if post_1.image and post_1.image.url != '/media/temp.jpg' %}
+<img src="{{ post_1.image.url }}" alt=" Картинка статьи блога" width="200">
+{% endif %}
+
+<p> {{post_1.content|linebreaksbr}} </p>
+
+{% if user.is_authenticated %}
+
+<hr />
+<h3>Добавить комментарий</h3>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div>
+
+        {{form.as_p}}
+
+
+    </div>
+    <button type="submit" class="save btn btn-default"> Отправить комментарий </button>
+
+</form>
+
+{% else %}
+
+    <h3> Для добавления своего комментария, пожалуйста, авторизуйтесь </h3>
+
+{% endif %}
+
+{% for comment in comments %}
+
+    <hr />
+
+    <div class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1 text-info">{{ comment.author }}</h5>
+            <small class="text-muted"> {{ comment.date }} </small>
+        </div>
+        <hr />
+        <p class="mb-1"> {{comment.text|linebreaksbr}} </p>
+    </div>
+
+{% endfor %}
+
+
+{% endblock %}
